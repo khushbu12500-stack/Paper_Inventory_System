@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Purchase History</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+<div class="page-header">
+
+    <div>
+        <h1>🛒 Purchase Management</h1>
+        <p>View and manage all purchase records.</p>
+    </div>
+
+    <div class="header-buttons">
+
+        <a href="/add_purchase" class="add-btn">
+            ➕ Add Purchase
+        </a>
+
+    </div>
+
+</div>
+<div class="summary-cards">
+
+    <div class="summary-card">
+       <h3>🛒 Total Purchases</h3>
+        <p>{{ total_purchases }}</p>
+    </div>
+
+    <div class="summary-card">
+       <h3>📦 Total Quantity</h3>
+        <p>{{ total_quantity }}</p>
+    </div>
+
+    <div class="summary-card">
+       <h3>💰 Total Purchase Amount</h3>
+        <p>₹ {{ total_amount }}</p>
+    </div>
+
+</div>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+            <div class="flash {{ category }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
+<div class="table-toolbar">
+
+    <input
+        type="text"
+        id="searchInput"
+        placeholder="🔍 Search Purchase..."
+    >
+
+</div>
+
+<div class="table-container">
+
+<table id="purchaseTable">
+<thead>
+
+<tr>
+    <th>ID</th>
+    <th>🏢 Supplier</th>
+<th>📦 Product</th>
+<th>📊 Quantity</th>
+<th>💵 Price / Unit</th>
+<th>💰 Total Price</th>
+<th>📅 Purchase Date</th>
+</tr>
+
+</thead>
+
+<tbody>
+
+{% for purchase in purchases %}
+
+<tr>
+
+    <td>{{ purchase[0] }}</td>
+
+    <td>{{ purchase[1] }}</td>
+
+    <td>{{ purchase[2] }}</td>
+
+    <td>{{ purchase[3] }}</td>
+
+    <td>₹ {{ purchase[4] }}</td>
+
+    <td><strong>₹ {{ purchase[5] }}</strong></td>
+
+    <td>{{ purchase[6] }}</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+<footer class="footer">
+
+<hr>
+
+<p>
+© 2026 Paper Inventory Management System |
+Developed by <strong>Khushbu Kumari</strong>
+</p>
+
+</footer>
+<script>
+
+const searchInput = document.getElementById("searchInput");
+
+searchInput.addEventListener("keyup", function () {
+
+    let filter = searchInput.value.toLowerCase();
+
+    let table = document.getElementById("purchaseTable");
+
+    let rows = table.getElementsByTagName("tr");
+
+    for (let i = 1; i < rows.length; i++) {
+
+        let rowText = rows[i].textContent.toLowerCase();
+
+        if (rowText.indexOf(filter) > -1) {
+            rows[i].style.display = "";
+        } else {
+            rows[i].style.display = "none";
+        }
+
+    }
+
+});
+
+</script>
+
+</body>
+</html>

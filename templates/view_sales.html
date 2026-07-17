@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sales History</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+<div class="page-header">
+
+    <div>
+        <h1>💰 Sales Management</h1>
+        <p>View and manage all sales records.</p>
+    </div>
+
+    <div class="header-buttons">
+
+        <a href="/add_sale" class="add-btn">
+            ➕ Add Sale
+        </a>
+
+    </div>
+
+</div>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+            <div class="flash {{ category }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
+
+<div class="summary-cards">
+
+    <div class="summary-card">
+       <h3>💰 Total Sales</h3>
+        <p>{{ total_sales }}</p>
+    </div>
+
+    <div class="summary-card">
+        <h3>📦 Total Quantity Sold</h3>
+        <p>{{ total_quantity }}</p>
+    </div>
+
+    <div class="summary-card">
+        <h3>💵 Total Revenue</h3>
+        <p>₹ {{ "{:,.2f}".format(total_revenue) }}</p>
+    </div>
+
+</div>
+<div class="table-toolbar">
+
+    <input
+        type="text"
+        id="searchInput"
+        placeholder="🔍 Search Sale..."
+    >
+
+</div>
+
+
+
+<div class="table-container">
+
+<table id="salesTable">
+
+<thead>
+
+<tr>
+    <th>ID</th>
+   <th>📦 Product</th>
+<th>👤 Customer</th>
+<th>📊 Quantity</th>
+<th>💵 Price / Unit</th>
+<th>💰 Total Price</th>
+<th>📅 Sale Date</th>
+</tr>
+
+</thead>
+
+<tbody>
+
+{% for sale in sales %}
+
+<tr>
+
+    <td>{{ sale[0] }}</td>
+
+    <td>{{ sale[1] }}</td>
+
+    <td>{{ sale[2] }}</td>
+
+    <td>{{ sale[3] }}</td>
+
+    <td>₹ {{ sale[4] }}</td>
+
+    <td><strong>₹ {{ sale[5] }}</strong></td>
+
+    <td>{{ sale[6] }}</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+<footer class="footer">
+
+<hr>
+
+<p>
+© 2026 Paper Inventory Management System |
+Developed by <strong>Khushbu Kumari</strong>
+</p>
+
+</footer>
+<script>
+
+const searchInput = document.getElementById("searchInput");
+
+searchInput.addEventListener("keyup", function () {
+
+    let filter = searchInput.value.toLowerCase();
+
+    let table = document.getElementById("salesTable");
+
+    let rows = table.getElementsByTagName("tr");
+
+    for (let i = 1; i < rows.length; i++) {
+
+        let rowText = rows[i].textContent.toLowerCase();
+
+        if (rowText.indexOf(filter) > -1) {
+            rows[i].style.display = "";
+        } else {
+            rows[i].style.display = "none";
+        }
+
+    }
+
+});
+
+</script>
+
+</body>
+</html>

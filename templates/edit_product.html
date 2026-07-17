@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Product</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<div class="login-box">
+
+    <h2>Edit Product</h2>
+
+    <form method="POST">
+
+        <label>Product Name</label><br>
+        <input type="text"
+               name="product_name"
+               value="{{ product[1] }}"
+               required><br><br>
+
+       <label>Category <span class="required">*</span></label>
+
+<select id="category" name="category" required>
+    <option value="{{ product[2] }}">{{ product[2] }}</option>
+    <option value="Paper">Paper</option>
+    <option value="Electronics">Electronics</option>
+    <option value="Chemicals">Chemicals</option>
+    <option value="Pipes">Pipes</option>
+    <option value="Containers">Containers</option>
+    <option value="Office Supplies">Office Supplies</option>
+</select>
+
+<br><br>
+
+        <label>Specification <span class="required">*</span></label>
+
+<select id="specification" name="specification" required>
+    <option value="{{ product[5] }}">{{ product[5] }}</option>
+</select>
+
+<br><br>
+
+<label>Brand <span class="required">*</span></label>
+
+<select id="brand" name="brand" required>
+    <option value="{{ product[9] }}">{{ product[9] }}</option>
+</select>
+
+<br><br>
+
+        <label>Unit <span class="required">*</span></label>
+
+<select name="unit" required>
+
+<option value="{{ product[6] }}">{{ product[6] }}</option>
+
+<option value="Piece">Piece</option>
+<option value="Ream">Ream</option>
+<option value="Sheet">Sheet</option>
+<option value="Pack">Pack</option>
+<option value="Box">Box</option>
+<option value="Kg">Kg</option>
+<option value="Litre">Litre</option>
+<option value="Meter">Meter</option>
+<option value="Drum">Drum</option>
+
+</select>
+
+<br><br>
+
+
+
+        <label>Quantity</label><br>
+<input type="number"
+       id="quantity"
+       name="quantity"
+       value="{{ product[3] }}"
+       required><br><br>
+
+       <label>Price Per Unit</label><br>
+<input type="number"
+       id="price"
+       name="price_per_unit"
+       value="{{ product[4] }}"
+       required><br><br>
+
+       <label>Total Price</label><br>
+<input type="number"
+       id="total_price"
+       name="total_price"
+       value="{{ product[7] }}"
+       readonly><br><br>
+
+        <label>Supplier <span class="required">*</span></label>
+
+<select name="supplier" required>
+
+<option value="{{ product[8] }}">{{ product[8] }}</option>
+
+{% for supplier in suppliers %}
+<option value="{{ supplier[0] }}">
+    {{ supplier[0] }}
+</option>
+{% endfor %}
+
+</select>
+
+<br><br>
+
+
+        <button type="submit">
+            Update Product
+        </button>
+
+    </form>
+
+</div>
+<script>
+const productData = {
+
+    "Paper": {
+        specifications: ["White","Blue","Pink","Yellow","Green"],
+        brands: ["JK Copier","JK Easy Copier","Century","Xerox","Navigation","BILT Copier","Chamex"]
+    },
+
+    "Electronics": {
+        specifications: ["Laptop","Keyboard","Mouse","Printer","Scanner"],
+        brands: ["HP","Dell","ASUS","Lenovo","Logitech","Zebronics"]
+    },
+
+    "Chemicals": {
+        specifications: ["Glue","Ink","Bleach","Acid"],
+        brands: ["BASF","SABIC","LG Chem","Atul Ltd"]
+    },
+
+    "Pipes": {
+        specifications: ["PVC","GI","CPVC","HDPE"],
+        brands: ["Ashirvad","Finolex","Astral"]
+    },
+
+    "Containers": {
+        specifications: ["Plastic Drum","Steel Drum","Carton Box"],
+        brands: ["Time Technoplast","Sintex"]
+    },
+
+    "Office Supplies": {
+        specifications: ["Pen","Notebook","File","Stapler"],
+        brands: ["Reynolds","Classmate","Solo"]
+    }
+
+};
+
+document.getElementById("category").addEventListener("change", function(){
+
+    let category = this.value;
+
+    let specification = document.getElementById("specification");
+    let brand = document.getElementById("brand");
+
+    specification.innerHTML =
+    '<option value="">Select Specification</option>';
+
+    brand.innerHTML =
+    '<option value="">Select Brand</option>';
+
+    if(productData[category]){
+
+        productData[category].specifications.forEach(function(item){
+
+            specification.innerHTML +=
+            `<option value="${item}">${item}</option>`;
+
+        });
+
+        productData[category].brands.forEach(function(item){
+
+            brand.innerHTML +=
+            `<option value="${item}">${item}</option>`;
+
+        });
+
+    }
+
+});
+</script>
+
+</body>
+</html>

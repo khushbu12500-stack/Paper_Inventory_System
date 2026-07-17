@@ -1,0 +1,230 @@
+.<div class="page-header">
+
+    <div>
+        <h1>📦 Add Product</h1>
+        <p>Add a new product to the inventory.</p>
+    </div>
+
+</div>
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+    {% for category, message in messages %}
+
+        <div class="flash {{ category }}">
+            {{ message }}
+        </div>
+
+    {% endfor %}
+{% endif %}
+{% endwith %}
+<div class="form-container">
+
+<form method="POST">
+    <!--javascipt apply here-->
+    
+<h2 class="form-title">📦 Product Information</h2>
+    <label>Product Name <span class="required">*</span></label>
+    
+    <input type="text" name="product_name" placeholder=" enter product name"  required><br><br>
+      <label>Category<span class="required">*</span></label>
+
+<select id="category" name="category" onchange="updateBrands()" required>
+    <option value="">Select Category</option>
+    <option value="Paper">Paper</option>
+    <option value="Electronics">Electronics</option>
+    <option value="Chemicals">Chemicals</option>
+    <option value="Pipes">Pipes</option>
+    <option value="Containers">Containers</option>
+    <option value="Office Supplies">Office Supplies</option>
+</select>
+
+
+   <label>Specification <span class ="required">*</span></label>
+
+<select id="specification" name="specification" required>
+    <option value="">Select Specification</option>
+</select>
+
+
+
+<label>Brand<span class="required">*</span></label><br>
+
+<select id="brand" name="brand" required>
+    <option value="">Select Brand</option>
+</select>
+
+
+
+<label>Unit <span class="required">*</span></label>
+
+<select name="unit" required>
+    <option value="">Select Unit</option>
+    <option value="pack">Piece</option>
+    <option value="Ream">Ream</option>
+    <option value="piece">Sheet</option>
+    <option value="gram">Pack</option>
+    <option value="litre">Box</option>
+    <option value="millilitre">Kg</option>
+    <option value="bag">Litre</option>
+    <option value="bottle">Meter</option>
+    <option value="box">Drum</option>
+    <option  value="roll">1 inch</option>
+    <option  value="sheet">2 inch</option>
+    <option  value="ton">3 inch</option>
+    <option  value="meter">3 inch</option>
+    <option  value="drum">drum</option>
+    
+
+</select>
+
+
+
+   
+   
+
+<hr>
+
+<h2 class="form-title">📊 Inventory Details</h2>
+
+    <label>Quantity<span class="required">*</span></label><br>
+    <input type="number"  id="quantity" name="quantity" placeholder="enter quantity" required><br><br>
+    <!--<label>specification</label>-->
+
+
+
+<label>Price <span class="required">*</span></label>
+<input type="number" id="price" name="price_per_unit" placeholder="enter price" required><br><br>
+
+<label>Total Price<span class="required">*</span></label>
+<input type="number" id="total_price"  name="total_price" readonly><br><br>
+<hr>
+
+<h2 class="form-title">🏢 Supplier Information</h2>
+
+<label>Supplier<span class="required">*</span></label><br>
+
+<select name="supplier" required>
+    <option value="">Select Supplier</option>
+
+    {% for supplier in suppliers %}
+        <option value="{{ supplier[0] }}">
+            {{ supplier[0] }}
+        </option>
+    {% endfor %}
+
+</select>
+
+
+
+
+
+    <div class="form-buttons">
+
+<button type="submit">
+💾 Save Product
+</button>
+
+<a href="/view_products" class="add-btn">
+⬅ Back
+</a>
+
+</div>
+</form>
+</div>
+<script>
+
+const productData = {
+
+    "Paper": {
+        specifications: ["White","Blue","Pink","Yellow","Green"],
+        brands: ["JK Copier","JK Easy Copier","Century","Xerox","Navigation","BILT Copier","Chamex"]
+    },
+
+    "Electronics": {
+        specifications: ["Laptop","Keyboard","Mouse","Printer","Scanner"],
+        brands: ["HP","Dell","ASUS","Lenovo","Logitech","Zebronics"]
+    },
+
+    "Chemicals": {
+        specifications: ["Glue","Ink","Bleach","Acid"],
+        brands: ["BASF","SABIC","LG Chem","Atul Ltd"]
+    },
+
+    "Pipes": {
+        specifications: ["PVC","GI","CPVC","HDPE"],
+        brands: ["Ashirvad","Finolex","Astral"]
+    },
+
+    "Containers": {
+        specifications: ["Plastic Drum","Steel Drum","Carton Box"],
+        brands: ["Time Technoplast","Sintex"]
+    },
+
+    "Office Supplies": {
+        specifications: ["Pen","Notebook","File","Stapler"],
+        brands: ["Reynolds","Classmate","Solo"]
+    }
+
+};
+
+document.getElementById("category").addEventListener("change", function(){
+
+    let category = this.value;
+
+    let specification = document.getElementById("specification");
+    let brand = document.getElementById("brand");
+
+    specification.innerHTML =
+    '<option value="">Select Specification</option>';
+
+    brand.innerHTML =
+    '<option value="">Select Brand</option>';
+
+    if(productData[category]){
+
+        productData[category].specifications.forEach(function(item){
+
+            specification.innerHTML +=
+            `<option value="${item}">${item}</option>`;
+
+        });
+
+        productData[category].brands.forEach(function(item){
+
+            brand.innerHTML +=
+            `<option value="${item}">${item}</option>`;
+
+        });
+
+    }
+
+});
+
+function calculateTotal(){
+
+    let qty =
+    parseFloat(document.getElementById("quantity").value) || 0;
+
+    let price =
+    parseFloat(document.getElementById("price").value) || 0;
+
+    document.getElementById("total_price").value = qty * price;
+
+}
+
+document.getElementById("quantity").addEventListener("input", calculateTotal);
+document.getElementById("price").addEventListener("input", calculateTotal);
+
+</script>
+<footer class="footer">
+
+<hr>
+
+<p>
+© 2026 Paper Inventory Management System |
+Developed by <strong>Khushbu Kumari</strong>
+</p>
+
+</footer>
+</body>
+</html>

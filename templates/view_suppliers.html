@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>View Suppliers</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+
+
+
+
+<div class="page-header">
+
+    <div>
+        <h1>🏢 Supplier Management</h1>
+        <p>Manage all suppliers of Kuantum Paper Mill.</p>
+    </div>
+
+    <div class="header-buttons">
+
+        <a href="/add_supplier" class="add-btn">
+            ➕ Add Supplier
+        </a>
+
+    </div>
+    </div>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+            <div class="flash {{ category }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
+
+<div class="table-toolbar">
+
+    <input
+        type="text"
+        id="searchInput"
+        placeholder="🔍 Search Supplier...">
+
+</div>
+
+</div>
+
+<br>
+
+<div class="table-container">
+
+<table id="supplierTable">
+
+<thead>
+
+<tr>
+    <th>ID</th>
+    <th>Supplier Name</th>
+    <th>Company Name</th>
+    <th>Phone</th>
+    <th>Email</th>
+    <th>Address</th>
+    <th>GST Number</th>
+    <th>Action</th>
+</tr>
+
+</thead>
+
+<tbody>
+
+{% for supplier in suppliers %}
+
+<tr>
+
+    <td>{{ supplier[0] }}</td>
+    <td>{{ supplier[1] }}</td>
+    <td>{{ supplier[2] }}</td>
+    <td>{{ supplier[3] }}</td>
+    <td>{{ supplier[4] }}</td>
+    <td>{{ supplier[5] }}</td>
+    <td>{{ supplier[6] }}</td>
+<td>
+
+<a href="/edit_supplier/{{ supplier[0] }}" class="action-btn edit">
+✏ Edit
+</a>
+
+<a href="/delete_supplier/{{ supplier[0] }}"
+class="action-btn delete"
+onclick="return confirm('Delete this supplier?')">
+🗑 Delete
+</a>
+
+</td>
+    
+    
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+<footer class="footer">
+
+    <hr>
+
+    <p>
+        © 2026 Paper Inventory Management System |
+        Developed by <strong>Khushbu Kumari</strong>
+    </p>
+
+</footer>
+<script>
+
+const searchInput = document.getElementById("searchInput");
+
+searchInput.addEventListener("keyup", function () {
+
+    let filter = searchInput.value.toLowerCase();
+
+    let table = document.getElementById("supplierTable");
+
+    let rows = table.getElementsByTagName("tr");
+
+    for (let i = 1; i < rows.length; i++) {
+
+        let rowText = rows[i].textContent.toLowerCase();
+
+        if (rowText.indexOf(filter) > -1) {
+            rows[i].style.display = "";
+        } else {
+            rows[i].style.display = "none";
+        }
+
+    }
+
+});
+
+</script>
+
+</body>
+</html>

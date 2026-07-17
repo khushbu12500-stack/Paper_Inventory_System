@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | Paper Inventory</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+    <!-- ================= SIDEBAR ================= -->
+
+    <div class="sidebar">
+
+        <div class="logo">
+            <h2>📦 Paper Inventory</h2>
+            <span>Kuantum Paper Mill</span>
+        </div>
+
+        <a href="/dashboard" class="active">🏠 Dashboard</a>
+
+        <h3>Product Management</h3>
+
+        <a href="/add_product">➕ Add Product</a>
+        <a href="/view_products">📦 View Products</a>
+        <a href="/search_product">🔍 Search Product</a>
+
+        <h3>Supplier Management</h3>
+
+        <a href="/add_supplier">➕ Add Supplier</a>
+        <a href="/view_suppliers">🏢 View Suppliers</a>
+
+        <h3>Purchase Management</h3>
+
+        <a href="/add_purchase">🛒 Add Purchase</a>
+        <a href="/view_purchases">📋 View Purchases</a>
+
+        <h3>Sales Management</h3>
+
+        <a href="/add_sale">💰 Add Sale</a>
+        <a href="/view_sales">📊 View Sales</a>
+
+        <h3>Reports</h3>
+
+        <a href="/stock_history">📜 Stock History</a>
+        <a href="/export_excel">📦 Export Products (Excel)</a>
+        <a href="/export_stock_history_excel">📊 Export Stock History (Excel)</a>
+        <a href="/export_pdf">📄 Export PDF</a>
+
+        <h3>Future Modules</h3>
+
+        <a href="#">🏭 Production</a>
+        <a href="#">💰 Accounting</a>
+
+        <hr>
+
+        <a href="/">🚪 Logout</a>
+
+    </div>
+
+    <!-- ================= MAIN CONTENT ================= -->
+
+    <div class="main">
+
+        <!-- Dashboard Header -->
+
+        <div class="dashboard-header">
+
+            <div>
+                <h1>📊 Inventory Dashboard</h1>
+                <p>Welcome back! Manage your paper inventory efficiently.</p>
+            </div>
+
+            <div class="header-date">
+                <h3>{{ current_date }}</h3>
+            </div>
+
+        </div>
+
+        <!-- Quick Actions -->
+
+        <div class="quick-actions">
+
+            <a href="/add_product" class="quick-btn">➕ Add Product</a>
+
+            <a href="/add_supplier" class="quick-btn">🏢 Add Supplier</a>
+
+            <a href="/add_purchase" class="quick-btn">🛒 Purchase</a>
+
+            <a href="/add_sale" class="quick-btn">💰 Sale</a>
+
+            <a href="/stock_history" class="quick-btn">📜 History</a>
+
+        </div>
+
+        <!-- Dashboard Cards -->
+
+        <div class="cards-container">
+
+            <div class="card">
+                <h3>📦 Total Products</h3>
+                <p>{{ total_products }}</p>
+            </div>
+
+            <div class="card">
+                <h3>⚠ Low Stock Products</h3>
+                <p>{{ low_stock }}</p>
+            </div>
+
+            <div class="card">
+                <h3>❌ Out of Stock</h3>
+                <p>{{ out_of_stock }}</p>
+            </div>
+
+            <div class="card">
+                <h3>📚 Total Stock Quantity</h3>
+                <p>{{ total_stock }}</p>
+            </div>
+
+            <div class="card">
+                <h3>💰 Total Inventory Value</h3>
+                <p>₹ {{ inventory_value }}</p>
+            </div>
+
+            <div class="card">
+                <h3>🏢 Total Suppliers</h3>
+                <p>{{ total_suppliers }}</p>
+            </div>
+
+            <div class="card">
+                <h3>🛒 Total Purchase Orders</h3>
+                <p>{{ total_purchases }}</p>
+            </div>
+
+            <div class="card">
+                <h3>💵 Total Sales Orders</h3>
+                <p>{{ total_sales }}</p>
+            </div>
+
+        </div>
+
+        <!-- Footer -->
+
+        <footer class="footer">
+
+            <hr>
+
+            <p>
+                © 2026 Paper Inventory Management System |
+                Developed by <strong>Khushbu Kumari</strong> |
+                Summer Training @ Kuantum Paper Mill
+            </p>
+
+        </footer>
+
+    </div>
+
+</body>
+
+</html>

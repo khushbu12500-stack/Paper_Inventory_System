@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Stock History</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+<div class="page-header">
+
+    <div>
+        <h1>📜 Stock History</h1>
+        <p>View all inventory stock movements.</p>
+    </div>
+
+    <div class="header-buttons">
+
+        <a href="/export_stock_excel" class="export-btn excel-btn">
+            📥 Export Excel
+        </a>
+
+    </div>
+
+</div>
+<div class="summary-cards">
+
+    <div class="summary-card">
+        <h3>Total Transactions</h3>
+        <p>{{ total_transactions }}</p>
+    </div>
+
+    <div class="summary-card">
+        <h3>Total Purchases</h3>
+        <p>{{ total_purchase }}</p>
+    </div>
+
+    <div class="summary-card">
+       <h3>💰 Total Sales</h3>
+        <p>{{ total_sale }}</p>
+    </div>
+
+</div>
+<div class="table-toolbar">
+
+    <input
+        type="text"
+        id="searchInput"
+        placeholder="🔍 Search Stock History..."
+    >
+
+</div>
+
+
+
+<div class="table-container">
+
+<table>
+
+<thead>
+
+<tr>
+   <th>ID</th>
+<th>📦 Product Name</th>
+<th>📌 Action</th>
+<th>📊 Quantity</th>
+<th>📅 Date & Time</th>
+</tr>
+
+</thead>
+
+<tbody>
+
+{% for history in histories %}
+
+<tr>
+
+    <td>{{ history[0] }}</td>
+
+    <td>{{ history[1] }}</td>
+
+    <td>
+        {% if history[2]|lower == "purchase" %}
+            <span class="status instock">➕ Purchase</span>
+
+        {% elif history[2]|lower == "sale" %}
+            <span class="status outstock">➖ Sale</span>
+
+        {% else %}
+            {{ history[2] }}
+        {% endif %}
+    </td>
+
+    <td>{{ history[3] }}</td>
+
+    <td>{{ history[4] }}</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+<footer class="footer">
+
+<hr>
+
+<p>
+© 2026 Paper Inventory Management System |
+Developed by <strong>Khushbu Kumari</strong>
+</p>
+
+</footer>
+</body>
+</html>

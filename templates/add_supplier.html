@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Supplier</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+<div class="page-header">
+
+    <div>
+        <h1>🏢 Add Supplier</h1>
+        <p>Add a new supplier to the inventory system.</p>
+    </div>
+
+</div>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+    {% for category, message in messages %}
+
+        <div class="flash {{ category }}">
+            {{ message }}
+        </div>
+
+    {% endfor %}
+{% endif %}
+{% endwith %}
+
+<div class="form-container">
+
+<form method="POST">
+
+<h2 class="form-title">🏢 Supplier Information</h2>
+
+<label>Supplier Name <span class="required">*</span></label>
+<input
+type="text"
+name="supplier_name"
+placeholder="Enter supplier name"
+required>
+
+<label>Company Name <span class="required">*</span></label>
+<input
+type="text"
+name="company_name"
+placeholder="Enter company name"
+required>
+
+<label>Phone Number <span class="required">*</span></label>
+<input
+type="text"
+name="phone"
+placeholder="Enter phone number"
+required>
+
+<label>Email <span class="required">*</span></label>
+<input
+type="email"
+name="email"
+placeholder="Enter email address"
+required>
+
+<label>Address <span class="required">*</span></label>
+<textarea
+name="address"
+rows="4"
+placeholder="Enter supplier address"
+required></textarea>
+
+<label>GST Number <span class="required">*</span></label>
+<input
+type="text"
+name="gst_number"
+placeholder="Enter GST Number"
+required>
+
+<div class="form-buttons">
+
+<button type="submit">
+💾 Save Supplier
+</button>
+
+<a href="/view_suppliers" class="add-btn">
+⬅ Back
+</a>
+
+</div>
+
+</form>
+
+</div>
+
+<footer class="footer">
+
+<hr>
+
+<p>
+© 2026 Paper Inventory Management System |
+Developed by <strong>Khushbu Kumari</strong>
+</p>
+
+</footer>
+
+</body>
+</html>

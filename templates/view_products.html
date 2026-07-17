@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>View Products</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+<h1>📦 Product Management</h1>
+<p>Manage, update and monitor all inventory products.</p>
+<div class="summary-cards">
+
+    <div class="summary-card">
+        <h3>Total Products</h3>
+        <p>{{ total_products }}</p>
+    </div>
+
+    <div class="summary-card">
+        <h3>🟢 In Stock</h3>
+        <p>{{ in_stock }}</p>
+    </div>
+
+    <div class="summary-card">
+        <h3>🟡 Low Stock</h3>
+        <p>{{ low_stock }}</p>
+    </div>
+
+    <div class="summary-card">
+        <h3>🔴 Out of Stock</h3>
+        <p>{{ out_stock }}</p>
+    </div>
+
+</div>
+
+<div class="page-header">
+
+    <div>
+        <h1>📦 Product Management</h1>
+        <p>Manage all paper inventory products.</p>
+    </div>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+            <div class="flash {{ category }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
+    <div class="header-buttons">
+
+        <a href="/export_excel" class="export-btn excel-btn">
+            📥 Export Excel
+        </a>
+
+        <a href="/export_pdf" class="export-btn pdf-btn">
+            📄 Export PDF
+        </a>
+
+    </div>
+
+</div>
+
+<br><br>
+<div class="table-toolbar">
+
+    <input
+        type="text"
+        id="searchInput"
+        placeholder="🔍 Search Product..."
+        onkeyup="searchTable()"
+    >
+
+</div>
+
+<div class="table-container">
+<table>
+
+
+    <thead>
+
+<tr>
+
+    <th>ID</th>
+    <th>Product Name</th>
+    <th>Category</th>
+    <th>Specification</th>
+    <th>Unit</th>
+    <th>Quantity</th>
+    <th>Price Per Unit</th>
+    <th>Total Price</th>
+    <th>Supplier</th>
+     <th>Status</th>
+    <th>Action</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+
+
+{% for product in products %}
+
+<tr>
+    <td>{{ product[0] }}</td>   <!-- ID -->
+    <td>{{ product[1] }}</td>   <!-- Product Name -->
+    <td>{{ product[2] }}</td>   <!-- Category -->
+    <td>{{ product[5] }}</td>   <!-- Specification -->
+    <td>{{ product[6] }}</td>   <!-- Unit -->
+    <td>{{ product[3] }}</td>   <!-- Quantity -->
+    <td>{{ product[4] }}</td>   <!-- Price Per Unit -->
+    <td>{{ product[7] }}</td>   <!-- Total Price -->
+    <td>{{ product[8] }}</td>   <!-- Supplier -->
+   
+
+
+ 
+
+<td>
+    {% if product[3] == 0 %}
+        <span class="status outstock">🔴 Out of Stock</span>
+
+    {% elif product[3] < 10 %}
+        <span class="status lowstock">🟡 Low Stock</span>
+
+    {% else %}
+        <span class="status instock">🟢 In Stock</span>
+
+    {% endif %}
+</td>
+
+
+<td>
+    <a href="/edit_product/{{ product[0] }}" class="action-btn edit">
+        ✏ Edit
+    </a>
+
+    <a href="/update_stock/{{ product[0] }}" class="action-btn stockin">
+        ➕ Stock In
+    </a>
+
+    <a href="/stock_out/{{ product[0] }}" class="action-btn stockout">
+        ➖ Stock Out
+    </a>
+
+    <a href="/delete_product/{{ product[0] }}"
+       class="action-btn delete"
+       onclick="return confirm('Delete this product?')">
+        🗑 Delete
+    </a>
+</td>
+
+   
+  
+
+
+    
+</tr>
+
+{% endfor %}
+
+</tbody>
+</table>
+
+</div>
+<script>
+function searchTable() {
+
+    let input = document.getElementById("searchInput");
+    let filter = input.value.toUpperCase();
+
+    let table = document.querySelector("table");
+
+    let rows = table.getElementsByTagName("tr");
+
+    for (let i = 1; i < rows.length; i++) {
+
+        let product = rows[i].getElementsByTagName("td")[1];
+
+        if (product) {
+
+            let txt = product.textContent || product.innerText;
+
+            rows[i].style.display =
+                txt.toUpperCase().indexOf(filter) > -1
+                ? ""
+                : "none";
+        }
+    }
+}
+</script>
+
+</body>
+</html>
